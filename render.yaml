@@ -19,7 +19,7 @@ services:
       - key: INGEST_SCHEDULE_ENABLED
         value: "false"
       - key: INGEST_BOOT_ENABLED
-        value: "true"
+        value: "false"
       - key: INGEST_WATCHDOG_ENABLED
         value: "false"
       - key: INGEST_ON_DEMAND_ENABLED

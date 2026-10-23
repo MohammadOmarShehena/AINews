@@ -38,7 +38,8 @@ if (enabled(process.env.INGEST_WATCHDOG_ENABLED)) {
 
 serve({
   fetch: app.fetch,
-  port: Number(env.PORT)
+  port: Number(env.PORT),
+  hostname: "0.0.0.0"
 });
 
 console.log(`API listening on ${env.PORT}`);
