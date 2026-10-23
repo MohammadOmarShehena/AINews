@@ -6,12 +6,14 @@ import { env } from "../env";
 
 const isRemoteOrProd =
   process.env.NODE_ENV === "production" ||
-  env.DATABASE_URL.includes("sslmode=require") ||
+  env.DATABASE_URL.includes("sslmode=") ||
   env.DATABASE_URL.includes("supabase") ||
   env.DATABASE_URL.includes("neon.tech");
 
+const cleanUrl = env.DATABASE_URL.replace(/[?&]sslmode=[^&]+/g, "");
+
 const pool = new Pool({
-  connectionString: env.DATABASE_URL,
+  connectionString: cleanUrl,
   ...(isRemoteOrProd ? { ssl: { rejectUnauthorized: false } } : {})
 });
 
