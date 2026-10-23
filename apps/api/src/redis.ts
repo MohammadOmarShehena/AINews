@@ -2,5 +2,6 @@ import Redis from "ioredis";
 import { env } from "./env";
 
 export const redis = new Redis(env.REDIS_URL, {
-  maxRetriesPerRequest: null
+  maxRetriesPerRequest: null,
+  ...(env.REDIS_URL.startsWith("rediss://") ? { tls: { rejectUnauthorized: false } } : {})
 });

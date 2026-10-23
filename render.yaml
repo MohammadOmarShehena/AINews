@@ -1,0 +1,42 @@
+services:
+  - type: web
+    name: ainews-api
+    runtime: node
+    plan: free
+    region: oregon
+    buildCommand: npm install
+    startCommand: npm run db:migrate --workspace apps/api && npx tsx apps/api/src/index.ts
+    healthCheckPath: /health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: NODE_OPTIONS
+        value: --dns-result-order=ipv4first
+      - key: PORT
+        value: 10000
+      - key: AI_REQUEST_PRIORITY
+        value: interactive
+      - key: INGEST_SCHEDULE_ENABLED
+        value: "false"
+      - key: INGEST_BOOT_ENABLED
+        value: "true"
+      - key: INGEST_WATCHDOG_ENABLED
+        value: "false"
+      - key: INGEST_ON_DEMAND_ENABLED
+        value: "true"
+      - key: INGEST_ON_DEMAND_COOLDOWN_MS
+        value: "900000"
+      - key: NEXTAUTH_SECRET
+        generateValue: true
+      - key: DATABASE_URL
+        sync: false
+      - key: REDIS_URL
+        sync: false
+      - key: NVIDIA_API_KEY
+        sync: false
+      - key: GROQ_API_KEY
+        sync: false
+      - key: NEWSAPI_KEY
+        sync: false
+      - key: GNEWS_KEY
+        sync: false
