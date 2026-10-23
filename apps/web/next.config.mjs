@@ -1,5 +1,5 @@
 /** @type {import('next').NextConfig} */
-const internalApiUrl = process.env.INTERNAL_API_URL;
+const internalApiUrl = process.env.INTERNAL_API_URL || process.env.NEXT_PUBLIC_API_URL;
 const isStaticExport = process.env.NEXT_OUTPUT === "export" || process.env.STATIC_EXPORT === "true";
 
 const nextConfig = {
@@ -19,16 +19,18 @@ const nextConfig = {
         ...(internalApiUrl
           ? {
               async rewrites() {
-                return [
-                  {
-                    source: "/api/:path*",
-                    destination: `${internalApiUrl}/api/:path*`,
-                  },
-                  {
-                    source: "/health",
-                    destination: `${internalApiUrl}/health`,
-                  },
-                ];
+                return {
+                  beforeFiles: [
+                    {
+                      source: "/api/:path*",
+                      destination: `${internalApiUrl}/api/:path*`,
+                    },
+                    {
+                      source: "/health",
+                      destination: `${internalApiUrl}/health`,
+                    },
+                  ],
+                };
               },
               experimental: {
                 proxyTimeout: 300000,
