@@ -13,6 +13,9 @@
     "lint": "npm run lint --workspace apps/web",
     "db:migrate": "npm run db:migrate --workspace packages/db"
   },
+  "dependencies": {
+    "tsx": "^4.10.5"
+  },
   "devDependencies": {
     "concurrently": "^8.2.2",
     "dotenv": "^17.3.1",

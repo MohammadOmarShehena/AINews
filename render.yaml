@@ -4,7 +4,7 @@ services:
     runtime: node
     plan: free
     region: oregon
-    buildCommand: npm install
+    buildCommand: npm install --include=dev
     startCommand: npm run db:migrate --workspace apps/api && npm run start --workspace apps/api
     healthCheckPath: /health
     envVars:
