@@ -18,7 +18,12 @@ const credentialsSchema = z.object({
 });
 
 authRoutes.post("/register", async (c) => {
-  const body = credentialsSchema.parse(await c.req.json());
+  const parseResult = credentialsSchema.safeParse(await c.req.json().catch(() => ({})));
+  if (!parseResult.success) {
+    const message = parseResult.error.errors[0]?.message || "Invalid email or password (min 8 chars)";
+    return c.json({ error: message }, 400);
+  }
+  const body = parseResult.data;
 
   const existing = await db
     .select({ id: users.id })
@@ -47,7 +52,12 @@ authRoutes.post("/register", async (c) => {
 });
 
 authRoutes.post("/login", async (c) => {
-  const body = credentialsSchema.parse(await c.req.json());
+  const parseResult = credentialsSchema.safeParse(await c.req.json().catch(() => ({})));
+  if (!parseResult.success) {
+    const message = parseResult.error.errors[0]?.message || "Invalid email or password";
+    return c.json({ error: message }, 400);
+  }
+  const body = parseResult.data;
 
   const existing = await db
     .select()

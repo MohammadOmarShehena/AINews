@@ -24,7 +24,8 @@ export default function RegisterPage() {
     });
 
     if (!res.ok) {
-      setError("Could not register");
+      const data = await res.json().catch(() => ({}));
+      setError(data.error || "Could not register. Password must be at least 8 characters.");
       return;
     }
 
