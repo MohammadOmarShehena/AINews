@@ -92,6 +92,10 @@ export const storyAIWorker = new Worker(
   }
 );
 
+storyAIWorker.on("error", (err) => {
+  console.error("[Story AI] Worker error:", err.message);
+});
+
 storyAIWorker.on("failed", (job, err) => {
   console.error(`[Story AI] Job ${job?.id} failed:`, err);
 });

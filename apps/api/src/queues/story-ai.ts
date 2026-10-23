@@ -13,6 +13,10 @@ export const storyAIQueue = new Queue("story-ai", {
   }
 });
 
+storyAIQueue.on("error", (err) => {
+  console.error("Story AI queue error:", err.message);
+});
+
 export async function enqueueStoryAI(storyId: string) {
   await storyAIQueue.add(`process-${storyId}`, { storyId }, {
     jobId: `story-${storyId}`, // De-duplicate parallel updates for the same story

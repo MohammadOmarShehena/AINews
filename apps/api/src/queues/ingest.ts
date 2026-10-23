@@ -10,6 +10,10 @@ export const ingestQueue = new Queue("ingest", {
   }
 });
 
+ingestQueue.on("error", (err) => {
+  console.error("Ingest queue error:", err.message);
+});
+
 export async function clearScheduledIngest() {
   const repeatableJobs = await ingestQueue.getRepeatableJobs();
   for (const job of repeatableJobs) {

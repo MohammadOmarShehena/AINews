@@ -193,6 +193,10 @@ export const ingestWorker = new Worker(
   }
 );
 
+ingestWorker.on("error", (err) => {
+  console.error("Ingest worker error:", err.message);
+});
+
 ingestWorker.on("failed", (job, err) => {
   console.error("Ingest job failed", job?.id, err);
 });
