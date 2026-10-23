@@ -31,7 +31,7 @@ export default function LoginPage() {
     }
 
     await refresh();
-    router.push("/");
+    window.location.href = "/";
   };
 
   return (

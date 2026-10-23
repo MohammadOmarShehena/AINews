@@ -30,7 +30,7 @@ export default function RegisterPage() {
     }
 
     await refresh();
-    router.push("/");
+    window.location.href = "/";
   };
 
   return (
